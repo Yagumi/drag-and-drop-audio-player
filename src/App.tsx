@@ -1,56 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React, { useReducer } from 'react';
+import { useAppSelector } from './app/hooks';
 import './App.css';
 
+import { DragAndDrop } from './features/drag-and-drop/DragAndDrop';
+import { Player } from './features/player/Player';
+import { Audio } from './features/player/Audio';
+
+import { selectPlayList } from './features/drag-and-drop/dragAndDropSlice';
+
 function App() {
+  const songsList = useAppSelector(selectPlayList)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <h1>React drag and drop component</h1>
+      <DragAndDrop />
+      <div>
+        {
+          songsList.map(item => <p>{item.name}</p>)
+        }
+      </div>
     </div>
   );
 }

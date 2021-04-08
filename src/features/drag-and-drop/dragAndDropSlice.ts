@@ -1,13 +1,8 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { TInitialState, TSong } from './types';
 
-interface IInitialState {
-  dropDepth: number;
-  inDropZone: boolean, 
-  playList: File[],
-}
-
-const initialState: IInitialState = {
+const initialState: TInitialState = {
   dropDepth: 0,
   inDropZone: false,
   playList: [],
@@ -23,9 +18,9 @@ const dragAndDropSlice = createSlice({
     setInDropZone: (state, action: PayloadAction<boolean>) => {
       state.inDropZone = action.payload;
     },
-    addSong: (state, action: PayloadAction<File[]>) => {
+    addSong: (state, action: PayloadAction<TSong[]>) => {
       console.log(action.payload)
-      // state.playList.concat(action.payload)// needed a normalizing date
+      state.playList = [...state.playList, ...action.payload]
     }
   },
 });

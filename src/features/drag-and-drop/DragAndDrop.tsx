@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import { useAppSelector,useAppDispatch } from '../../app/hooks';
 
 import {
@@ -40,16 +42,11 @@ export const DragAndDrop: React.FC = () => {
     e.stopPropagation();
 
     let files = [...e.dataTransfer.files];
-    console.log(files)
-    const reader = new FileReader();
-    const url = reader.readAsDataURL(files[0]);
-    console.log(url)
+    const songs = files.map(song => ({ id: uuidv4(), name: song.name, url: URL.createObjectURL(song)}));
 
     if (files && files.length > 0) {
-      // const existingFiles = playList.map(f => f.name)
-      // files = files.filter(f => !existingFiles.includes(f.name))
+      dispatch(dispatch(addSong(songs)));
 
-      // dispatch(dispatch(addSong(files)));
       e.dataTransfer.clearData();
       dispatch({ type: 'SET_DROP_DEPTH', dropDepth: 0 });
       dispatch({ type: 'SET_IN_DROP_ZONE', inDropZone: false });
